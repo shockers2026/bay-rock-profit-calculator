@@ -324,7 +324,7 @@ function resetForm(){
   recalc();
 }
 
-async function saveProperty(){
+function saveProperty(){
   const address = document.getElementById('address').value.trim();
   if(!address){
     showStatus('Please enter a property address', 'error');
@@ -334,20 +334,6 @@ async function saveProperty(){
   showStatus('Saving...', 'info');
   
   try {
-    // Fetch the form to extract entry IDs
-    const formResponse = await fetch('https://docs.google.com/forms/d/e/1FAIpQLSf4URXA09PadZG9zbW1mVVv5vWpJnKeh8qWcJVk3xXcgQ_aIw/viewform');
-    const html = await formResponse.text();
-    
-    // Extract all entry.XXXXX IDs from the form HTML
-    const entryRegex = /name="entry\.(\d+)"/g;
-    const matches = [...html.matchAll(entryRegex)];
-    const entryIds = matches.map(m => m[1]);
-    
-    if(entryIds.length < 7){
-      throw new Error('Could not find all form fields');
-    }
-    
-    // Prepare data
     const now = new Date();
     const dateCreated = (now.getMonth()+1).toString().padStart(2,'0') + '/' + now.getDate().toString().padStart(2,'0') + '/' + now.getFullYear();
     const rehab = document.getElementById('rehabOverride').value || document.getElementById('rehabAuto').textContent.replace('$','').replace(',','');
@@ -358,26 +344,47 @@ async function saveProperty(){
     const offer3 = offersText[2]?.textContent?.replace('$','').replace(',','') || '0';
     const currentUrl = window.location.href;
     
-    // Build form data with correct entry IDs (in order: Address, Date, Rehab, Offer1, Offer2, Offer3, Offer Made, Link)
-    const formData = new FormData();
-    formData.append(`entry.${entryIds[0]}`, address);
-    formData.append(`entry.${entryIds[1]}`, dateCreated);
-    formData.append(`entry.${entryIds[2]}`, rehab);
-    formData.append(`entry.${entryIds[3]}`, offer1);
-    formData.append(`entry.${entryIds[4]}`, offer2);
-    formData.append(`entry.${entryIds[5]}`, offer3);
-    // Skip entryIds[6] for "Offer Made?" - user can fill manually in sheet
-    formData.append(`entry.${entryIds[7]}`, currentUrl);
+    // Create hidden iframe to submit form
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.name = 'submitFrame';
+    document.body.appendChild(iframe);
     
-    // Submit to Google Form
-    await fetch('https://docs.google.com/forms/d/e/1FAIpQLSf4URXA09PadZG9zbW1mVVv5vWpJnKeh8qWcJVk3xXcgQ_aIw/formResponse', {
-      method: 'POST',
-      body: formData,
-      mode: 'no-cors'
-    });
+    // Create hidden form to submit
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'https://docs.google.com/forms/d/e/1FAIpQLSf4URXA09PadZG9zbW1mVVv5vWpJnKeh8qWcJVk3xXcgQ_aIw/formResponse';
+    form.target = 'submitFrame';
     
-    showStatus('✓ Property saved to spreadsheet!', 'success');
-    setTimeout(()=>showStatus('', ''), 3000);
+    // Add form fields (using estimated entry IDs - you may need to verify)
+    const fields = {
+      'entry.1612533449': address,           // Property Address
+      'entry.887832244': dateCreated,        // Date Created
+      'entry.1689341043': rehab,             // Rehab
+      'entry.1893479627': offer1,            // Offer #1
+      'entry.1322449752': offer2,            // Offer #2
+      'entry.1476195906': offer3,            // Offer #3
+      'entry.1156489649': currentUrl         // Link
+    };
+    
+    for(let key in fields){
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = fields[key];
+      form.appendChild(input);
+    }
+    
+    document.body.appendChild(form);
+    form.submit();
+    
+    // Clean up
+    setTimeout(()=>{
+      document.body.removeChild(form);
+      document.body.removeChild(iframe);
+      showStatus('✓ Property saved to spreadsheet!', 'success');
+      setTimeout(()=>showStatus('', ''), 3000);
+    }, 1000);
     
   } catch(err){
     console.error('Save error:', err);
