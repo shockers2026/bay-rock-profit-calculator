@@ -1,87 +1,184 @@
-Skip to content
-shockers2026
-bay-rock-profit-calculator
-Repository navigation
-Code
-Issues
-Pull requests
-Agents
-Actions
-Projects
-Wiki
-Security and quality
-Insights
-Settings
-Commit f198e2a
-shockers2026
-shockers2026
-authored
-16 minutes ago
-·
-·
-Verified
-Refactor resetForm to streamline field resets
-main
-1 parent 
-4a6cc53
- commit 
-f198e2a
-1 file changed
-
-+11
--18
-Lines changed: 11 additions & 18 deletions
-File tree
-Filter files…
-index.html
-Search within code
- 
-‎index.html‎
-+11
--18
-Lines changed: 11 additions & 18 deletions
-Original file line number	Diff line number	Diff line change
-@@ -313,30 +313,23 @@ <h2>Novation Scenario Table — Offer #3 only</h2>
-
-// RESET when address changes
-document.getElementById('address').addEventListener('change', resetForm);
-function resetForm(){
-  if(document.getElementById('address').value.trim() === '') return;
-  
-  const fields = ['yearBuilt', 'sqft', 'listPrice', 'arv', 'rehabOverride', 'desiredProfit', 'x1', 'x2', 't3OfferInput', 't3ClosingPct'];
-  fields.forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.value = '';
-  });
-  
-  const desired = document.getElementById('desiredProfit');
-  if(desired) desired.value = '20000';
-  const x1 = document.getElementById('x1');
-  if(x1) x1.value = '0.65';
-  const x2 = document.getElementById('x2');
-  if(x2) x2.value = '0.70';
-  const closing = document.getElementById('t3ClosingPct');
-  if(closing) closing.value = '0.06';
-  
-  document.getElementById('yearBuilt').value='';
-  document.getElementById('sqft').value='';
-  document.getElementById('listPrice').value='';
-  document.getElementById('arv').value='';
-  document.getElementById('rehabOverride').value='';
-  document.getElementById('desiredProfit').value='20000';
-  document.getElementById('x1').value='0.65';
-  document.getElementById('x2').value='0.70';
-  document.getElementById('t3OfferInput').value='';
-  document.getElementById('t3ClosingPct').value='0.06';
-  rehabDirty=false;
-  t3Dirty=false;
-  recalc();
-}
-
-function saveProperty(){
-  const address = document.getElementById('address').value.trim();
-0 commit comments
-Comments
-0
- (0)
-Comment
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAABToElEQVR4nO19d5QU1fb1PvdWVcfpicCQkyTJQVEQRcGEYhZzwKyYs/jMz8gz54z6zDljVsSEgSiSJwOTQ+euqnu+P6q7Z4YkKMj7zdd7rV4z01NVN9Suc0+8RczMyCCDNgKxozuQQQbbEhlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQoZQmfQppAhdAZtChlCZ9CmkCF0Bm0KGUJn0KaQIXQGbQr/D3PfWh/fXJBkAAAAAElFTkSuQmCC">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Bay Rock Profit Calc">
+<meta name="theme-color" content="#0142aa">
+<title>Bay Rock Profit Calculator — 3‑Tier Offer</title>
+<style>
+  :root{
+    --paper: #f2ede2; --paper-line: #d8cfba; --ink: #2a2620; --ink-soft: #6b6355;
+    --blueprint: #0142aa; --blueprint-2: #2e64b9; --brass: #b5852a;
+    --card: #faf7ee; --t1: #4a5d68; --t2: #2e6b57; --t3: #0142aa;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper);
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(31,61,77,0.05) 28px);
+    color:var(--ink); font-family:"Arial",sans-serif; padding:24px 14px 60px;
+  }
+  .wrap{max-width:980px;margin:0 auto;}
+  .stamp-row{border-bottom:3px solid var(--blueprint); padding-bottom:12px; margin-bottom:20px;}
+  h1{font-family:"Arial",sans-serif; font-size:24px; letter-spacing:1.5px; text-transform:uppercase; margin:0; color:var(--blueprint);}
+  .sub{font-size:12.5px; color:var(--ink-soft); letter-spacing:.3px; margin-top:3px;}
+  .card{background:var(--card); border:1px solid var(--paper-line); border-left:4px solid var(--blueprint); border-radius:2px; padding:16px 18px; margin-bottom:14px;}
+  .card h2{font-family:"Arial",sans-serif; font-size:13px; letter-spacing:1.5px; text-transform:uppercase; color:var(--blueprint-2); margin:0 0 12px 0;}
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px 18px;}
+  label{display:block; font-size:11px; letter-spacing:.6px; text-transform:uppercase; color:var(--ink-soft); margin-bottom:4px;}
+  input[type=text], input[type=number]{
+    width:100%; padding:10px 8px; font-family:"Arial",sans-serif; font-size:16px;
+    border:1px solid var(--paper-line); background:#fffdf7; color:var(--ink); border-radius:2px;
+  }
+  input:focus{outline:2px solid var(--blueprint-2); outline-offset:1px;}
+  .field.need input{background:#fff7d6; border-color:#e2cf7a;}
+  .field.knob input{background:#fffef2;}
+  .hint{font-size:10.5px; color:var(--ink-soft); margin-top:3px; line-height:1.3;}
+  .btn{background:var(--blueprint); color:#fff; border:none; padding:11px 14px; font-size:12.5px; letter-spacing:.5px; text-transform:uppercase; border-radius:2px; cursor:pointer; min-height:40px;}
+  .btn.ghost{background:transparent; color:var(--blueprint); border:1px solid var(--blueprint);}
+  .kv{display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px dashed var(--paper-line); font-size:14px;}
+  .kv:last-child{border-bottom:none;}
+  .kv .k{color:var(--ink-soft);}
+  .kv .v{font-family:"Arial",sans-serif; font-weight:700;}
+  .tiers{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:14px;}
+  .tier{background:#fff; border:1px solid var(--paper-line); border-top:5px solid var(--t1); padding:14px; border-radius:2px;}
+  .tier.t2{border-top-color:var(--t2);}
+  .tier.t3{border-top-color:var(--t3);}
+  .tier .num{font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft);}
+  .tier .name{font-family:"Arial",sans-serif; font-size:14px; letter-spacing:1px; text-transform:uppercase; margin:2px 0 4px 0;}
+  .tier .tag{font-size:10.5px; color:var(--ink-soft); font-style:italic; margin-bottom:10px;}
+  .tier .offer{font-family:"Arial",sans-serif; font-size:27px; font-weight:700; color:var(--blueprint);}
+  .tier.t2 .offer{color:var(--t2);}
+  .tier.t3 .offer{color:var(--t3);}
+  .tier .offer-label{font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-soft); margin-top:2px; margin-bottom:10px;}
+  .tier .knobs{display:grid; grid-template-columns:1fr; gap:8px; padding-top:8px; border-top:1px dashed var(--paper-line);}
+  .tier .knobs .field{margin-bottom:0;}
+  .formula{font-size:11px; color:var(--ink-soft); font-family:"Arial",sans-serif; margin-top:8px;}
+  .note{font-size:11.5px; color:var(--ink-soft); font-style:italic; margin-top:8px; line-height:1.4;}
+  .flag{background:#fbe9df; border:1px solid #e3b393; color:#7a3a1c; font-size:11.5px; padding:8px 10px; border-radius:2px; margin-top:10px; line-height:1.4;}
+  table.scenario{width:100%; border-collapse:collapse; font-size:12.5px;}
+  table.scenario th{text-align:right; font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-soft); padding:5px 8px; border-bottom:2px solid var(--blueprint);}
+  table.scenario th:first-child{text-align:left;}
+  table.scenario td{padding:5px 8px; border-bottom:1px dashed var(--paper-line); font-family:"Arial",sans-serif; text-align:right; white-space:nowrap;}
+  table.scenario td.rowlabel{font-family:"Arial",sans-serif; color:var(--ink-soft); text-align:left; white-space:normal;}
+  table.scenario td.rowlabel, table.scenario th:first-child{position:sticky; left:0; background:var(--card); z-index:1;}
+  table.scenario tr.row-yellow td.rowlabel{background:#fff3b0;}
+  .scroll-x{-webkit-overflow-scrolling:touch;}
+  @media (max-width:640px){
+    body{padding:16px 10px 50px;}
+    h1{font-size:19px;}
+    .card{padding:13px 12px;}
+    .tier .offer{font-size:23px;}
+  }
+  table.scenario tr.row-yellow td{background:#fff3b0;}
+  table.scenario tr.row-yellow td.rowlabel{color:#6b5a00; font-weight:700;}
+  .profit-row { margin-bottom: 20px; }
+  @media (max-width:640px){ .tiers{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="stamp-row">
+    <h1>Bay Rock Profit Calculator</h1>
+    <div class="sub" id="addrLine">The 3‑Tier Offer — Anchor · Partners · Novations</div>
+  </div>
+  <div class="card">
+    <h2>Needed Inputs</h2>
+    <div class="grid">
+      <div class="field need"><label>Property Address</label><input type="text" id="address" value="107 Shell Cove Court, Joppa MD 21085"></div>
+      <div class="field need"><label>Year Built</label><input type="number" id="yearBuilt" value="1985"></div>
+      <div class="field need"><label>Square Feet</label><input type="number" id="sqft" value="1800"></div>
+      <div class="field need"><label>List Price ($)</label><input type="number" id="listPrice" value="125000"></div>
+      <div class="field need"><label>ARV / Zillow Estimate ($)</label><input type="number" id="arv" value="250000"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Rehab Estimate — the unknown</h2>
+    <div class="kv"><span class="k">Auto‑estimate from age &amp; square footage</span><span class="v" id="rehabAuto">—</span></div>
+    <div class="grid" style="margin-top:8px;">
+      <div class="field need"><label>Rehab estimate to use ($) — override or adjust freely</label><input type="number" id="rehabOverride" value="57500"></div>
+    </div>
+    <div style="margin-top:8px;"><button class="btn ghost" onclick="resetRehab()">Reset to auto‑estimate</button></div>
+    <div class="note">Feeds all three offers below. Type over it any time you know more than the formula does.</div>
+  </div>
+  <div class="card" style="border-left-color:var(--brass);">
+    <h2>The 3‑Tier Offer</h2>
+    <div class="grid" style="margin-bottom:14px;">
+      <div class="field knob"><label>Desired profit ($) — used in all three offers</label><input type="number" id="desiredProfit" value="20000"></div>
+    </div>
+    <div class="tiers">
+      <div class="tier t1">
+        <div class="num">Offer #1</div>
+        <div class="name">All Cash — the Anchor</div>
+        <div class="tag">A deliberate low‑ball, to make #2 and #3 look reasonable by comparison</div>
+        <div class="offer" id="t1_offer">—</div>
+        <div class="offer-label">= (ARV × anchor %) − Rehab − Desired Profit</div>
+        <div class="knobs">
+          <div class="field knob"><label>Anchor % of ARV</label><input type="number" step="0.01" id="x1" value="0.65"></div>
+        </div>
+      </div>
+      <div class="tier t2">
+        <div class="num">Offer #2</div>
+        <div class="name">My Partners</div>
+        <div class="tag">Wholesale‑style math — cheaper money, still built for a resale spread</div>
+        <div class="offer" id="t2_offer">—</div>
+        <div class="offer-label">= (ARV × %) − Rehab − Desired Profit</div>
+        <div class="knobs">
+          <div class="field knob"><label>% of ARV</label><input type="number" step="0.01" id="x2" value="0.7"></div>
+        </div>
+      </div>
+      <div class="tier t3">
+        <div class="num">Offer #3</div>
+        <div class="name\">Novations</div>
+        <div class="tag">Partners + direct‑to‑buyer marketing — closer to full value</div>
+        <div class="offer" id="t3_offer">—</div>
+        <div class="offer-label">Our Offer Price — see scenario table below</div>
+        <div class="knobs">
+          <div class="field knob"><label>Our Offer Price ($) — override or adjust freely</label><input type="number" id="t3OfferInput" value="160950"></div>
+          <div class="field knob"><label>Closing/realtor % of As‑Is Value</label><input type="number" step="0.001" id="t3ClosingPct" value="0.06"></div>
+        </div>
+        <div style="margin-top:8px;"><button class="btn ghost" onclick="resetT3Offer()">Use Max Allowable Offer (full ARV)</button></div>
+      </div>
+    </div>
+    <div class="flag" id="orderFlag" style="display:none;"></div>
+    <div class="flag" id="negFlag" style="display:none;"></div>
+    <div style="margin-top:14px; padding-top:14px; border-top:1px dashed var(--paper-line);">
+      <button class="btn" onclick="saveProperty()" style="background:var(--t3); font-size:13px; padding:12px 16px;">Save Property to Spreadsheet</button>
+      <div id="saveStatus" style="margin-top:8px; font-size:12px; display:none;"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Novation Scenario Table — Offer #3 only</h2>
+    <div class="note" style="margin-top:0;">This table shows Offer #3 exclusively, laid out to match your "Master PZC Claude Novations" spreadsheet — 12 columns (#1–#12), each testing a lower resale (ARV) outcome, $5,000 apart.</div>
+    <div class="scroll-x" style="overflow-x:auto; margin-top:10px;">
+      <table class="scenario" id="novationTable" style="min-width:1000px;">
+        <thead>
+          <tr><th>NOVATION</th><th>#1</th><th>#2</th><th>#3</th><th>#4</th><th>#5</th><th>#6</th><th>#7</th><th>#8</th><th>#9</th><th>#10</th><th>#11</th><th>#12</th></tr>
+        </thead>
+        <tbody id="novationBody"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="note" style="margin-top:6px;">A note on getting this onto your phone or tablet: this is a self‑contained file — open it in any browser and it works fully offline.</div>
+</div>
+<script>
+function num(id){const v=parseFloat(document.getElementById(id).value); return isNaN(v)?0:v;}
+function fmt$(n){const neg=n<0;const s=Math.abs(Math.round(n)).toLocaleString('en-US');return (neg?'(':'')+'$'+s+(neg?')':'');}
+function rehabAuto(yearBuilt,sqft){const always=30000,major=8500,minor=2000,bumpPer500=5000;const breaks=[0,2000,2500,3000,3500,4000,4500,5000,5500,6000];let mult=0;for(let i=0;i<breaks.length;i++){if(sqft>=breaks[i])mult=i;}const bump=mult*bumpPer500;const base=always+minor+bump;const brackets=[];for(let y=1907;y<=2007;y+=10){brackets.push(y);}let bracketYear=brackets[0];for(const y of brackets){if(yearBuilt>=y)bracketYear=y;}const multiplier=Math.max(0,(2007-bracketYear)/10);return base+major*multiplier;}
+let rehabDirty=false;document.getElementById('rehabOverride').addEventListener('input',()=>{rehabDirty=true;recalc();});
+function resetRehab(){rehabDirty=false;const auto=rehabAuto(num('yearBuilt'),num('sqft'));document.getElementById('rehabOverride').value=Math.round(auto);recalc();}
+let t3Dirty=false;document.getElementById('t3OfferInput').addEventListener('input',()=>{t3Dirty=true;recalc();});
+function resetT3Offer(){t3Dirty=false;recalc();}
+function recalc(){document.getElementById('addrLine').textContent=document.getElementById('address').value||'The 3-Tier Offer';const yearBuilt=num('yearBuilt'),sqft=num('sqft'),arv=num('arv');const auto=rehabAuto(yearBuilt,sqft);document.getElementById('rehabAuto').textContent=fmt$(auto);if(!rehabDirty){document.getElementById('rehabOverride').value=Math.round(auto);}const rehab=num('rehabOverride');const desiredProfit=num('desiredProfit');const x1=num('x1');const offer1=arv*x1-rehab-desiredProfit;document.getElementById('t1_offer').textContent=fmt$(offer1);const x2=num('x2');const offer2=arv*x2-rehab-desiredProfit;document.getElementById('t2_offer').textContent=fmt$(offer2);const pctAsIsClose=num('t3ClosingPct');const cols=[];for(let c=0;c<12;c++){const arvC=arv-5000*c;const repairs=rehab;const mlsPrice=arvC-repairs;const closeCostAmt=mlsPrice*pctAsIsClose;const breakEven=mlsPrice-closeCostAmt;cols.push({arvC,repairs,mlsPrice,closeCostAmt,breakEven});}if(!t3Dirty){document.getElementById('t3OfferInput').value=Math.round(cols[0].breakEven);}const ourOffer3=num('t3OfferInput');document.getElementById('t3_offer').textContent=fmt$(ourOffer3);const rowDefs=[{label:'ARV',get:c=>fmt$(c.arvC)},{label:'REPAIRS',get:c=>fmt$(c.repairs)},{label:'MLS PRICE',get:c=>fmt$(c.mlsPrice)},{label:'CLOSE COST',get:c=>(pctAsIsClose*100).toFixed(1)+'%'},{label:'BREAK EVEN',get:c=>fmt$(c.breakEven)},{label:'OFFER PRICE',get:c=>fmt$(ourOffer3),rowClass:'row-yellow'},{label:'PROFIT',get:c=>{const profit=c.breakEven-ourOffer3;return fmt$(profit);}}];const body=document.getElementById('novationBody');body.innerHTML='';rowDefs.forEach(def=>{const tr=document.createElement('tr');if(def.rowClass)tr.className=def.rowClass;if(def.label==='PROFIT')tr.className='profit-row';const th=document.createElement('td');th.className='rowlabel';th.textContent=def.label;tr.appendChild(th);cols.forEach(c=>{const td=document.createElement('td');td.textContent=def.get(c);if(def.label==='PROFIT'){const profit=c.breakEven-ourOffer3;if(profit<1001){td.style.cssText='background:#ffcccc !important;color:#8b0000 !important;font-weight:700 !important;';}else if(profit<7000){td.style.cssText='background:#ffffcc !important;color:#b8860b !important;font-weight:700 !important;';}else if(profit<=10000){td.style.cssText='background:#d4edda !important;color:#155724 !important;font-weight:700 !important;';}else{td.style.cssText='background:#90EE90 !important;color:#0d5c0d !important;font-weight:700 !important;';}}tr.appendChild(td);});body.appendChild(tr);});const orderFlag=document.getElementById('orderFlag');if(offer2<offer1||offer3<offer2){orderFlag.style.display='block';orderFlag.textContent="Heads up: with these numbers the offers don't climb Anchor → Partners → Novations the way they're meant to.";}else{orderFlag.style.display='none';}const negFlag=document.getElementById('negFlag');if(offer1<0||offer2<0||offer3<0){negFlag.style.display='block';negFlag.textContent="One or more offers came out negative — the rehab estimate or desired profit leave no room for a viable offer as entered.";}else{negFlag.style.display='none';};}
+document.querySelectorAll('input').forEach(el=>{if(el.id!=='rehabOverride')el.addEventListener('input',recalc);});
+document.getElementById('address').addEventListener('change',resetForm);
+function resetForm(){if(document.getElementById('address').value.trim()==='')return;const fields=['yearBuilt','sqft','listPrice','arv','rehabOverride','desiredProfit','x1','x2','t3OfferInput','t3ClosingPct'];fields.forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});const desired=document.getElementById('desiredProfit');if(desired)desired.value='20000';const x1=document.getElementById('x1');if(x1)x1.value='0.65';const x2=document.getElementById('x2');if(x2)x2.value='0.70';const closing=document.getElementById('t3ClosingPct');if(closing)closing.value='0.06';rehabDirty=false;t3Dirty=false;recalc();}
+function saveProperty(){const address=document.getElementById('address').value.trim();if(!address){showStatus('Please enter a property address','error');return;}const now=new Date();const dateCreated=(now.getMonth()+1).toString().padStart(2,'0')+'/'+now.getDate().toString().padStart(2,'0')+'/'+now.getFullYear();const rehab=document.getElementById('rehabOverride').value||document.getElementById('rehabAuto').textContent.replace('$','').replace(',','');const offersText=document.querySelectorAll('.tier .offer');const offer1=offersText[0]?.textContent?.replace('$','').replace(',','')||'0';const offer2=offersText[1]?.textContent?.replace('$','').replace(',','')||'0';const offer3=offersText[2]?.textContent?.replace('$','').replace(',','')||'0';const formUrl='https://docs.google.com/forms/d/e/1FAIpQLSf4URXA09PadZG9zbW1mVVv5vWpJnKeh8qWcJVk3xXcgQ_aIw/viewform?usp=pp_url'+'&entry.2050292276='+encodeURIComponent(address)+'&entry.524115774='+encodeURIComponent(dateCreated)+'&entry.2016454711='+encodeURIComponent(rehab)+'&entry.691855669='+encodeURIComponent(offer1)+'&entry.1931174677='+encodeURIComponent(offer2)+'&entry.260669336='+encodeURIComponent(offer3)+'&entry.1502415133='+encodeURIComponent(window.location.href);window.open(formUrl,'_blank');showStatus('✓ Opening form to save property...','success');setTimeout(()=>showStatus('',''),3000);}
+function showStatus(msg,type){const el=document.getElementById('saveStatus');el.textContent=msg;if(type==='success'){el.style.color='#1f5c1c';el.style.fontWeight='700';}else if(type==='error'){el.style.color='#a41c1c';el.style.fontWeight='700';}else if(type==='info'){el.style.color='var(--ink-soft)';}el.style.display=msg?'block':'none';}
+recalc();
+</script>
+</body>
+</html>
