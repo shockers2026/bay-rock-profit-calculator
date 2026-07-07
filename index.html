@@ -276,27 +276,27 @@ function recalc(){
     if(def.rowClass) tr.className = def.rowClass;
     const th = document.createElement('td');
     th.className='rowlabel'; th.textContent=def.label; tr.appendChild(th);
-cols.forEach(c=>{
-  const td = document.createElement('td');
-  td.textContent = def.get(c);
-  
-  // Apply PROFIT row colors with inline styles
-  if(def.label === 'PROFIT'){
-    const profit = c.breakEven - ourOffer3;
-    if(profit < 1001){
-      td.style.cssText = 'background: #ffcccc !important; color: #8b0000 !important; font-weight: 700 !important;';
-    } else if(profit < 7000){
-      td.style.cssText = 'background: #ffffcc !important; color: #b8860b !important; font-weight: 700 !important;';
-    } else if(profit <= 10000){
-      td.style.cssText = 'background: #d4edda !important; color: #155724 !important; font-weight: 700 !important;';
-    } else {
-      td.style.cssText = 'background: #90EE90 !important; color: #0d5c0d !important; font-weight: 700 !important;';
-    }
+    cols.forEach(c=>{
+      const td = document.createElement('td');
+      td.textContent = def.get(c);
+      tr.appendChild(td);
+    });
+    body.appendChild(tr);
+  });
+
+  const orderFlag = document.getElementById('orderFlag');
+  if(offer2 < offer1 || offer3 < offer2){
+    orderFlag.style.display='block';
+    orderFlag.textContent = "Heads up: with these numbers the offers don't climb Anchor → Partners → Novations the way they're meant to (Offer #2: "+fmt$(offer2)+", Offer #3: "+fmt$(offer3)+" vs Offer #1: "+fmt$(offer1)+"). Try lowering the Desired Profit target, raising the % of ARV on Tier 2/3, or raising the anchor % — whichever fits how you actually want to negotiate this deal.";
+  } else {
+    orderFlag.style.display='none';
   }
-  
-  tr.appendChild(td);
-});
-body.appendChild(tr);
+  const negFlag = document.getElementById('negFlag');
+  if(offer1<0||offer2<0||offer3<0){
+    negFlag.style.display='block';
+    negFlag.textContent = "One or more offers came out negative — the rehab estimate or desired profit leave no room for a viable offer as entered.";
+  } else {
+    negFlag.style.display='none';
   }
 }
 
