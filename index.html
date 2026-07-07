@@ -340,39 +340,41 @@ function saveProperty(){
   
   showStatus('Saving...', 'info');
   
-  try {
-    const now = new Date();
-    const dateCreated = (now.getMonth()+1).toString().padStart(2,'0') + '/' + now.getDate().toString().padStart(2,'0') + '/' + now.getFullYear();
-    const rehab = document.getElementById('rehabOverride').value || document.getElementById('rehabAuto').textContent.replace('$','').replace(',','');
-    
-    const offersText = document.querySelectorAll('.tier .offer');
-    const offer1 = offersText[0]?.textContent?.replace('$','').replace(',','') || '0';
-    const offer2 = offersText[1]?.textContent?.replace('$','').replace(',','') || '0';
-    const offer3 = offersText[2]?.textContent?.replace('$','').replace(',','') || '0';
-    const currentUrl = window.location.href;
-    
-    // Create hidden iframe to submit form
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.name = 'submitFrame';
-    document.body.appendChild(iframe);
-    
-    // Create hidden form to submit
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = 'https://docs.google.com/forms/d/e/1FAIpQLSf4URXA09PadZG9zbW1mVVv5vWpJnKeh8qWcJVk3xXcgQ_aIw/formResponse';
-    form.target = 'submitFrame';
-    
-    // Add form fields (using estimated entry IDs - you may need to verify)
-    const fields = {
-      'entry.1612533449': address,           // Property Address
-      'entry.887832244': dateCreated,        // Date Created
-      'entry.1689341043': rehab,             // Rehab
-      'entry.1893479627': offer1,            // Offer #1
-      'entry.1322449752': offer2,            // Offer #2
-      'entry.1476195906': offer3,            // Offer #3
-      'entry.1156489649': currentUrl         // Link
-    };
+  const now = new Date();
+  const dateCreated = (now.getMonth()+1).toString().padStart(2,'0') + '/' + now.getDate().toString().padStart(2,'0') + '/' + now.getFullYear();
+  const rehab = document.getElementById('rehabOverride').value || document.getElementById('rehabAuto').textContent.replace('$','').replace(',','');
+  
+  const offersText = document.querySelectorAll('.tier .offer');
+  const offer1 = offersText[0]?.textContent?.replace('$','').replace(',','') || '0';
+  const offer2 = offersText[1]?.textContent?.replace('$','').replace(',','') || '0';
+  const offer3 = offersText[2]?.textContent?.replace('$','').replace(',','') || '0';
+  const currentUrl = window.location.href;
+  
+  const payload = {
+    address: address,
+    dateCreated: dateCreated,
+    rehab: rehab,
+    offer1: offer1,
+    offer2: offer2,
+    offer3: offer3,
+    link: currentUrl
+  };
+  
+  fetch('https://script.google.com/macros/s/AKfycby_lyI4JocAwA-uRYevILSmBTYpnS9yGF0Z9pu1CDRWzSTd51BNU0DmbSRwQKAqm9mJ/exec', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    headers: {'Content-Type': 'application/json'}
+  })
+  .then(r => r.json())
+  .then(data => {
+    showStatus('✓ Property saved to spreadsheet!', 'success');
+    setTimeout(()=>showStatus('', ''), 3000);
+  })
+  .catch(err => {
+    console.error('Save error:', err);
+    showStatus('Error saving: ' + err.message, 'error');
+  });
+}
     
     for(let key in fields){
       const input = document.createElement('input');
