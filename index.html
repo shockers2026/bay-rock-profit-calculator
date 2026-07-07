@@ -313,28 +313,21 @@ document.querySelectorAll('input').forEach(el=>{
 
 // RESET when address changes
 document.getElementById('address').addEventListener('change', resetForm);
+
 function resetForm(){
   if(document.getElementById('address').value.trim() === '') return;
-  
-  const fields = ['yearBuilt', 'sqft', 'listPrice', 'arv', 'rehabOverride', 'desiredProfit', 'x1', 'x2', 't3OfferInput', 't3ClosingPct'];
-  fields.forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.value = '';
-  });
-  
-  const desired = document.getElementById('desiredProfit');
-  if(desired) desired.value = '20000';
-  const x1 = document.getElementById('x1');
-  if(x1) x1.value = '0.65';
-  const x2 = document.getElementById('x2');
-  if(x2) x2.value = '0.70';
-  const closing = document.getElementById('t3ClosingPct');
-  if(closing) closing.value = '0.06';
-  
+  document.getElementById('yearBuilt').value='';
+  document.getElementById('sqft').value='';
+  document.getElementById('listPrice').value='';
+  document.getElementById('arv').value='';
+  document.getElementById('rehabOverride').value='';
+  document.getElementById('desiredProfit').value='20000';
+  document.getElementById('x1').value='0.65';
+  document.getElementById('x2').value='0.70';
+  document.getElementById('t3OfferInput').value='';
+  document.getElementById('t3ClosingPct').value='0.06';
   rehabDirty=false;
   t3Dirty=false;
-  recalc();
-}
   recalc();
 }
 
