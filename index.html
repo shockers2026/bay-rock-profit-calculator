@@ -279,6 +279,13 @@ function recalc(){
     cols.forEach(c=>{
       const td = document.createElement('td');
       td.textContent = def.get(c);
+      if(def.label === 'PROFIT'){
+        const profit = c.breakEven - ourOffer3;
+        if(profit < 1001) td.style.cssText = 'background:#ffcccc!important;color:#8b0000!important;font-weight:700!important;';
+        else if(profit < 7000) td.style.cssText = 'background:#ffffcc!important;color:#b8860b!important;font-weight:700!important;';
+        else if(profit <= 10000) td.style.cssText = 'background:#d4edda!important;color:#155724!important;font-weight:700!important;';
+        else td.style.cssText = 'background:#90EE90!important;color:#0d5c0d!important;font-weight:700!important;';
+      }
       tr.appendChild(td);
     });
     body.appendChild(tr);
